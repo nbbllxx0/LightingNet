@@ -220,11 +220,11 @@ class LightingNet(nn.Module):
     def forward(self, input):
         xout, x_layer1, x_layer2=self.feature_extract1(input)
 
-        Dehaze2_out = self.feature_extract2(xout, x_layer1, x_layer2)
+        ComplementarylearningSubnet = self.feature_extract2(xout, x_layer1, x_layer2)
 
-        R = self.VIT(input)
+        VITlowlightenhancementSubnet = self.VIT(input)
 
-        Final = torch.cat([Dehaze2_out, R], 1)
+        Final = torch.cat([ComplementarylearningSubnet, VITlowlightenhancementSubnet], 1)
 
         F = self.conv_2(Final)
 
